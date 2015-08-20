@@ -2,7 +2,6 @@ package steamapi
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -45,17 +44,10 @@ func (s SteamAPI) GetGlobalAchievementPercentages(appid int) (*GlobalAchievement
 	}
 	defer resp.Body.Close()
 
-	// Retrieve body
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
 	// Umarshal our json body into our struct and return it
 	var jsonResp GlobalAchievementPercentages
 
-	err = json.Unmarshal(body, &jsonResp)
+	err = json.NewDecoder(resp.Body).Decode(&jsonResp)
 	if err != nil {
 		return nil, err
 	}

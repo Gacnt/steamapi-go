@@ -2,7 +2,6 @@ package steamapi
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -64,17 +63,10 @@ func (s SteamAPI) GetNewsForApp(appid, count, maxlength int) (*GetAppNews, error
 	}
 	defer resp.Body.Close()
 
-	// Read from our body till EOF
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
 	// Get and send our data to our struct
 
 	var jsonResp GetAppNews
-	err = json.Unmarshal(body, &jsonResp)
+	err = json.NewDecoder(resp.Body).Decode(&jsonResp)
 	if err != nil {
 		return nil, err
 	}

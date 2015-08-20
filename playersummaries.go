@@ -3,7 +3,6 @@ package steamapi
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"time"
@@ -64,13 +63,11 @@ func (s SteamAPI) GetPlayerSummaries(steamIds ...int) (*PlayerSummaries, error) 
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
-
 	// Send our new Json Response to our struct and return it
 
 	var jsonResp PlayerSummaries
 
-	err = json.Unmarshal(body, &jsonResp)
+	err = json.NewDecoder(resp.Body).Decode(&jsonResp)
 	if err != nil {
 		return nil, err
 	}
