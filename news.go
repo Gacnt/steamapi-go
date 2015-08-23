@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-type SteamAPI struct {
-	APIKey string
-}
-
 type GetAppNews struct {
 	AppNews struct {
 		AppId     int `json:"appid"`
