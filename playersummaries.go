@@ -3,6 +3,7 @@ package steamapi
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -43,7 +44,7 @@ func (s SteamAPI) GetPlayerSummaries(steamIds ...uint64) (*PlayerSummaries, erro
 	requestURI.WriteString("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + s.APIKey + "&steamids=")
 
 	for _, id := range steamIds {
-		sSteamId := strconv.Itoa(id)
+		sSteamId := fmt.Sprintf("%v", id)
 		requestURI.WriteString("," + sSteamId)
 
 	}
