@@ -32,7 +32,7 @@ type PlayerSummaries struct {
 	} `json:"response"`
 }
 
-func (s SteamAPI) GetPlayerSummaries(steamIds ...int) (*PlayerSummaries, error) {
+func (s SteamAPI) GetPlayerSummaries(steamIds ...uint64) (*PlayerSummaries, error) {
 
 	// Get data from the arguments of
 	// the method and convert them to
